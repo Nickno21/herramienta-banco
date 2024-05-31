@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Login</title>
+    <style>
+        .captcha {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-in">
+            <form id="loginForm">
+                <h1>Login</h1>
+                <span>Login</span>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <div class="captcha" id="captcha"></div>
+                <input type="text" id="captchaInput" placeholder="Captcha" required>
+                <button type="button" onclick="refreshCaptcha()">Refrescar</button>
+                <a href="#">Olvidaste tu contraseña?</a>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left"></div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hola!</h1>
+                    <p>Esto es un calculador online que te ayuda con el banco. Es de pago. Para conseguirlo haz clic en Discord.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 90000) + 10000;
+        }
+
+        function refreshCaptcha() {
+            const captcha = document.getElementById('captcha');
+            const randomNumber = generateRandomNumber();
+            captcha.textContent = randomNumber;
+        }
+
+        // Refrescar el captcha al cargar la página
+        window.addEventListener('load', refreshCaptcha);
+
+        // Definir usuarios y contraseñas
+        const users = [
+            { email: "usuario1@example.com", password: "contraseña1" },
+            { email: "usuario2@example.com", password: "contraseña2" },
+            { email: "usuario3@example.com", password: "contraseña3" },
+            { email: "usuario4@example.com", password: "contraseña4" },
+            { email: "usuario5@example.com", password: "contraseña5" }
+        ];
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const captcha = document.getElementById('captchaInput').value;
+
+            // Verificar captcha
+            const captchaText = document.getElementById('captcha').textContent;
+            if (captcha !== captchaText) {
+                alert('Captcha incorrecto. Por favor, inténtalo de nuevo.');
+                return;
+            }
+
+            // Verificar credenciales
+            const user = users.find(user => user.email === email && user.password === password);
+
+            if (user) {
+                alert('¡Inicio de sesión exitoso!');
+                window.location.href = "https://sitio.com/pagina-de-bienvenida.html";
+            } else {
+                alert('Credenciales inválidas. Por favor, inténtalo de nuevo.');
+            }
+        });
+    </script>
+</body>
+
+</html>
